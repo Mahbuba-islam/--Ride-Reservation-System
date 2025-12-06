@@ -10,10 +10,17 @@ const createbooking = async(req:Request, res:Response) => {
 
 try{
  const result = await bookingServices.createbooking(req.body)
+ const bookingData = result.bookingResult.rows[0]
+ const vehicle =  result.vehicleData.rows[0]
 res.status(201).json({
     success:true,
     message:"Data inserted successfully",
-    data: result.rows[0]
+    data:
+    
+      result.bookingResult.rows[0],
+      vehicle
+    
+        
  })
  
 

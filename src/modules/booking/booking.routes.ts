@@ -4,7 +4,7 @@ import auth from "../middleware/authMid";
 
 const router = Router()
 
-router.post('/', auth('admin'), bookingControlers.createbooking)
+router.post('/', bookingControlers.createbooking)
 router.get('/', bookingControlers.getbookings)
 router.get('/:bookingId',  bookingControlers.getSinglebooking)
 router.put('/:bookingId', auth('admin') ,bookingControlers.updatebooking)

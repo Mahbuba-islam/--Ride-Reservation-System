@@ -3,13 +3,28 @@ import { pool } from "../../configs/db"
 
 // create booking
 const createbooking = async (payload: Record<string, unknown> ) => {
-    const {vehicle_name, type , registration_number, daily_rent_price, availability_status} = payload;
-   const result = await pool.query(` INSERT INTO bookings(vehicle_name, type , registration_number, daily_rent_price, availability_status) 
-        VALUES($1, $2, $3, $4, $5) RETURNING *`, [vehicle_name, type , registration_number, daily_rent_price, availability_status])
+    const { customer_id, vehicle_id, rent_start_date, rent_end_date} = payload;
+    const vehicleData = await pool.query(`SELECT vehicle_name, daily_rent_price FROM vehicles WHERE id=$1`, [vehicle_id])
+    const startDate = new Date(rent_start_date as number)
+    const endDate = new Date(rent_end_date as number)
+    const days = Math.ceil((endDate.getTime()- startDate.getTime()) / (1000 * 60 * 60 * 24));
+    const total_price = days * vehicleData.rows[0].daily_rent_price;
 
-        return result;
+
+     const bookingResult = await pool.query(` INSERT INTO bookings(customer_id, vehicle_id, rent_start_date, rent_end_date, total_price, status) 
+        VALUES($1, $2, $3, $4, $5, $6) RETURNING *`, [customer_id, vehicle_id, rent_start_date, rent_end_date, total_price, 'active'])
+   
+        return {
+            bookingResult,
+            vehicleData
+        }
+
+
+     }
+
+ {
+    
 }
-
 
 
 

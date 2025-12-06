@@ -40,14 +40,23 @@ const initDB = async() => {
                 vehicle_id INT REFERENCES Vehicles(id) ON DELETE CASCADE,
                 rent_start_date DATE NOT NULL,
                 rent_end_date DATE NOT NULL ,
-                total_price DECIMAL(10,2) NOT NULL CHECK ( total_price > 0 ),
-                status VARCHAR(20) CHECK ( status IN ('active', 'cancelled', 'returned') ),
-                CHECK (rent_end_date > rent_start_date)
-
+              CHECK (rent_end_date > rent_start_date)
                 )
+               
                 `)
-}
 
+                await pool.query(`
+                  ALTER TABLE bookings 
+                  ADD COLUMN IF NOT EXISTS total_price NUMERIC,
+                  ADD COLUMN IF NOT EXISTS status VARCHAR(50)
+
+                    `)
+               
+               
+                
+}
+ // total_price DECIMAL(10,2) NOT NULL CHECK ( total_price > 0 ),
+                // status VARCHAR(20) CHECK ( status IN ('active', 'cancelled', 'returned') ),
 
 
 

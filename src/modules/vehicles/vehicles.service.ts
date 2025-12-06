@@ -45,8 +45,8 @@ const deleteVehicles = async(id:string)=>{
 
 export const vehiclesServices = {
     createVehicles,
-     getVehicles,
-     getSingleVehicles,
+    getVehicles,
+    getSingleVehicles,
     updateVehicles,
     deleteVehicles
 }
