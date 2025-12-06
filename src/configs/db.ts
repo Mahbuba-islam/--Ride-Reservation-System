@@ -13,9 +13,9 @@ const initDB = async() => {
         id SERIAL PRIMARY KEY,
         name VARCHAR(120) NOT NULL,
         email VARCHAR(200) UNIQUE NOT NULL CHECK(email = LOWER(email)),
-        password VARCHAR(20) NOT NULL CHECK(LENGTH(password) >= 6),
-        phone VARCHAR(20) NOT NULL,
-        role VARCHAR(20) CHECK (role IN ('admin', 'customer'))
+        password TEXT NOT NULL CHECK(LENGTH(password) >= 6),
+        phone VARCHAR(40) NOT NULL,
+        role VARCHAR(70) CHECK (role IN ('admin', 'customer'))
         )
         `)
 
