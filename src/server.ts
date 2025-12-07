@@ -1,7 +1,7 @@
 import express, { Request, Response } from "express"
 import initDB from "./configs/db"
 import config from "./configs"
-import { routers, userRoutes } from "./modules/users/users.routes"
+import {userRoutes } from "./modules/users/users.routes"
 import { authRoutes } from "./modules/auth/auth.route"
 import { vehiclesRoutes } from "./modules/vehicles/vehicles.routes"
 import { bookingRoutes } from "./modules/booking/booking.routes"
