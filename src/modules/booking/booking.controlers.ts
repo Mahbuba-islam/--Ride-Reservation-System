@@ -1,8 +1,6 @@
 import { Request, Response } from "express";
 import {  bookingServices } from "./booking.service";
-import { Jwt, JwtPayload } from "jsonwebtoken";
-
-
+import {  JwtPayload } from "jsonwebtoken";
 
 
 // create booking
@@ -17,12 +15,12 @@ res.status(201).json({
     message:"Data inserted successfully",
     data: 
     result.bookingResult.rows[0],
-      vehicle
+    vehicle
     
 })
  
-
 }
+
 catch(err:any){
     res.status(500).json({
         success:false,
@@ -79,24 +77,6 @@ const getbookings = async (req:Request, res:Response) => {
 }
 
 
-// get Singlebooking
-
-const getSinglebooking = async (req:Request, res:Response) => {
-    try{
-        const result = await bookingServices.getSinglebooking(req.params.bookingId!)
-        res.status(200).json({
-            success:true,
-            message:"booking retrieved successfully",
-            data: result.rows
-        })
-    }
-    catch(err:any){
-        res.status(500).json({
-            success:false,
-            message:"booking not find"
-        })
-    }
-}
 
 
 
@@ -104,30 +84,21 @@ const getSinglebooking = async (req:Request, res:Response) => {
 
 const updatebooking = async (req:Request, res:Response) => {
  const id = req.params.bookingId
+ const user = req.user as JwtPayload
  
  
  try{
-    const result = await bookingServices.updatebooking(id!, req.body)
+    const result = await bookingServices.updatebooking(id!, user, req.body)
    console.log(result);
-   const user = req.user as JwtPayload
-   if(user.role === 'customer'){
-    const {vehicle , ...rest} = result
-    return  res.status(200).json({
-        success:true,
-        message:"booking updated successfully",
-        data: rest,
-       
-    })
-   }
-
-
-    res.status(200).json({
+  return  res.status(200).json({
         success:true,
         message:"booking updated successfully",
         data: result,
        
     })
- }
+   
+}
+
  catch(err:any){
         res.status(500).json({
             success:false,
@@ -139,40 +110,9 @@ const updatebooking = async (req:Request, res:Response) => {
 
 
 
-// delete booking
-
-const deletebooking = async(req:Request, res:Response) => {
-    const id = req.params.bookingId
-
-    try{
-      const result = await bookingServices.deletebooking(id!)
-   
-     if(result.rowCount === 0){
-          res.status(404).json({
-            success:false,
-            message:"booking not find"
-        })
-     }
-      res.status(200).json({
-        success:true,
-        message:"booking deleted successfully",
-        
-      })
-    }
-
-    catch(err:any){
-        res.status(500).json({
-            success:false,
-            message:err.message
-        })
-    }
-}
-
 
 export const bookingControlers = {
 createbooking,
 getbookings,
-getSinglebooking,
- updatebooking,
- deletebooking
+updatebooking,
 }

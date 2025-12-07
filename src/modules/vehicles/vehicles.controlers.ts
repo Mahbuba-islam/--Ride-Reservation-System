@@ -12,7 +12,7 @@ try{
  const result = await vehiclesServices.createVehicles(req.body)
 res.status(201).json({
     success:true,
-    message:"Data inserted successfully",
+    message:"Vehicle created successfully",
     data: result.rows[0]
  })
  

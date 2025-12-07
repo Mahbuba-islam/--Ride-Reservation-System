@@ -3,14 +3,15 @@ import {  authServices} from "./auth.service";
 
 
 
+ // sign up 
 const signup = async(req:Request, res:Response) => {
-
 try{
- const result = await authServices.signup(req.body)
+ const registerResult = await authServices.signup(req.body)
+ const {password, ...rest} =registerResult.rows[0]
 res.status(201).json({
     success:true,
-    message:"Data inserted successfully",
-    data: result.rows[0]
+    message:"User registered successfully",
+    data: rest
  })
  
 
@@ -33,12 +34,16 @@ const signin = async(req:Request, res:Response) => {
     const {email, password} = req.body
     
     try{
-     const result = await authServices.signin(email,password)
-
+     const result = await authServices.signin(email, password )
+     const {password:userPassword, ...rest} = result.user
      res.status(200).json({
         success:true,
-        message:"login successfully",
-        data: result,
+        message:"Login successful",
+        data:{
+            token:result.token,
+            user:rest
+        }
+        
      })
      
     

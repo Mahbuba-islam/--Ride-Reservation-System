@@ -4,7 +4,7 @@ import auth from "../middleware/authMid";
 
 const router = Router()
 
-router.post('/',  vehiclesControlers.createVehicles)
+router.post('/', auth('admin') , vehiclesControlers.createVehicles)
 router.get('/', vehiclesControlers.getVehicles)
 router.get('/:vehicleId',  vehiclesControlers.getSingleVehicles)
 router.put('/:vehicleId', auth('admin') ,vehiclesControlers.updateVehicles)
