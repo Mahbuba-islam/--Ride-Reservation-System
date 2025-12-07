@@ -4,9 +4,12 @@ import { pool } from "../../configs/db"
 // create booking
 const createbooking = async (payload: Record<string, unknown> ) => {
     const { customer_id, vehicle_id, rent_start_date, rent_end_date} = payload;
-
+     
+    // vehicle data
     const vehicleData = await pool.query(`SELECT vehicle_name, daily_rent_price FROM vehicles WHERE id=$1`, [vehicle_id])
+
     console.log('vehicle data:', vehicleData.rows[0].daily_rent_price);
+    
     const startDate = new Date(rent_start_date as number)
 
     const endDate = new Date(rent_end_date as number)
