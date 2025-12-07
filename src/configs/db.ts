@@ -55,10 +55,7 @@ const initDB = async() => {
                
                 
 }
- // total_price DECIMAL(10,2) NOT NULL CHECK ( total_price > 0 ),
-                // status VARCHAR(20) CHECK ( status IN ('active', 'cancelled', 'returned') ),
-
-
+ 
 
 
 

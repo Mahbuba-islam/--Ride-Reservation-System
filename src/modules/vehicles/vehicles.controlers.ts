@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { services, vehiclesServices } from "./vehicles.service";
+import { vehiclesServices } from "./vehicles.service";
 
 
 

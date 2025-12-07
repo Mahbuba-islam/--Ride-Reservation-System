@@ -5,9 +5,9 @@ import auth from "../middleware/authMid";
 const router = Router()
 
 router.post('/', bookingControlers.createbooking)
-router.get('/', bookingControlers.getbookings)
+router.get('/', auth('admin', 'customer'), bookingControlers.getbookings)
 router.get('/:bookingId',  bookingControlers.getSinglebooking)
-router.put('/:bookingId', auth('admin') ,bookingControlers.updatebooking)
-router.delete('/:bookingId', auth('admin') , bookingControlers.deletebooking)
+router.put('/:bookingId', auth('admin', 'customer'), bookingControlers.updatebooking)
+router.delete('/:bookingId', bookingControlers.deletebooking)
 
 export const bookingRoutes = router;
